@@ -4,7 +4,7 @@ KI-gesteuertes RC-Auto mit Raspberry Pi, Yolov8 und Claude API
 
 
 
-\# KI-gesteuertes RC-Auto
+# KI-gesteuertes RC-Auto
 
 
 
@@ -14,65 +14,65 @@ Sprachsteuerung und Hindernisvermeidung.
 
 
 
-\## Hardware
+## Hardware
 
 
 
-\- Raspberry Pi 5 (8GB)
+- Raspberry Pi 5 (8GB)
 
-\- Raspberry Pi Camera Module 3
+- Raspberry Pi Camera Module 3
 
-\- Ultraschallsensoren HC-SR04
+- Ultraschallsensoren HC-SR04
 
-\- L298N Motortreiber
+- L298N Motortreiber
 
-\- 4WD Robot Car Chassis Kit
+- 4WD Robot Car Chassis Kit
 
-\- 18650 LiPo-Akku (7.4V)
-
-
-
-\## Software / KI-Komponenten
+- 18650 LiPo-Akku (7.4V)
 
 
 
-\- YOLOv8 - Objekterkennung in Echtzeit
-
-\- OpenCV - Spurverfolgung
-
-\- Claude API - Sprachinteraktion
-
-\- pyttsx3 - Sprachausgabe
+## Software / KI-Komponenten
 
 
 
-\## Geplante Funktionen
+- YOLOv8 - Objekterkennung in Echtzeit
+
+- OpenCV - Spurverfolgung
+
+- Claude API - Sprachinteraktion
+
+- pyttsx3 - Sprachausgabe
 
 
 
-\- Autonomes Fahren mit Hinderniserkennung
-
-\- Objekterkennung und Reaktion (YOLOv8)
-
-\- Sprachsteuerung via Claude API
-
-\- Spurverfolgung mit OpenCV
+## Geplante Funktionen
 
 
 
-\## Projektstruktur
+- Autonomes Fahren mit Hinderniserkennung
+
+- Objekterkennung und Reaktion (YOLOv8)
+
+- Sprachsteuerung via Claude API
+
+- Spurverfolgung mit OpenCV
 
 
 
-\- motor/ - Motorsteuerung
+## Projektstruktur
 
-\- kamera/ - Objekterkennung
 
-\- sensoren/ - Ultraschallsensoren
 
-\- ki/ - Entscheidungslogik
+- motor/ - Motorsteuerung
 
-\- sprachsteuerung/ - Claude API Integration
+- kamera/ - Objekterkennung
 
-\- docs/ - Dokumentation
+- sensoren/ - Ultraschallsensoren
+
+- ki/ - Entscheidungslogik
+
+- sprachsteuerung/ - Claude API Integration
+
+- docs/ - Dokumentation
 
