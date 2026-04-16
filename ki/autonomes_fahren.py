@@ -3,10 +3,11 @@
 # Das Auto fährt selbstständig und weicht Hindernissen aus
 
 import sys
+import os
 import time
 
 # Eigene Module importieren
-sys.path.append("..")
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from motor.motor_steuerung import Auto
 from sensoren.ultraschall import HindernisSystem
 
