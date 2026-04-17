@@ -66,3 +66,8 @@ python main.py
 - Echtzeit-Kamera Stream
 - Web-Interface für Fernsteuerung
 - Raspberry Pi GPIO Integration
+
+## Screenshots
+
+### Server-Client Kommunikation
+![Server Client](docs/server_client_kommunikation.png)
