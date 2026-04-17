@@ -1,18 +1,13 @@
-# ki-auto
+# 🚗 KI-gesteuertes RC-Auto
 
-KI-gesteuertes RC-Auto mit Raspberry Pi, Yolov8 und Claude API
-
-
-
-# KI-gesteuertes RC-Auto
-
-Autonomes Fahrzeug auf Basis eines Raspberry Pi 5 mit KI-Objekterkennung, Sprachsteuerung und Hindernissvermeidung.
+Autonomes Fahrzeug auf Basis eines Raspberry Pi mit KI-Objekterkennung, 
+Sprachsteuerung via Claude API und automatischer Hindernissvermeidung.
 
 ## Hardware
 
 - Raspberry Pi 5 (8GB)
 - Raspberry Pi Camera Module 3
-- Ultraschallsensoren HC-SR04
+- Ultraschallsensoren HC-SR04 (vorne, links, rechts)
 - L298N Motortreiber
 - 4WD Robot Car Chassis Kit
 - 18650 LiPo-Akku (7.4V)
@@ -21,21 +16,41 @@ Autonomes Fahrzeug auf Basis eines Raspberry Pi 5 mit KI-Objekterkennung, Sprach
 
 - YOLOv8 - Objekterkennung in Echtzeit
 - OpenCV - Spurverfolgung
-- Claude API - Sprachinteraktion
+- Claude API - Sprachsteuerung
 - pyttsx3 - Sprachausgabe
-
-## Geplante Funktionen
-
-- Autonomes Fahren mit Hinderniserkennung
-- Objekterkennung und Reaktion (YOLOv8)
-- Sprachsteuerung via Claude API
-- Spurverfolgung mit OpenCV
 
 ## Projektstruktur
 
-- motor/ - Motorsteuerung
-- kamera/ - Objekterkennung
-- sensoren/ - Ultraschallsensoren
-- ki/ - Entscheidungslogik
-- sprachsteuerung/ - Claude API Integration
-- docs/ - Dokumentation
+- `motor/` - Motorsteuerung (4WD)
+- `sensoren/` - Ultraschallsensoren
+- `ki/` - Autonomes Fahren
+- `sprachsteuerung/` - Claude API Integration
+- `docs/` - Dokumentation
+
+## Installation
+
+```bash
+git clone git@github.com:donat-julian/ki-auto.git
+cd ki-auto
+pip install -r requirements.txt
+```
+
+## Starten
+
+```bash
+python main.py
+```
+
+## Funktionen
+
+- 🤖 Autonomes Fahren mit Hinderniserkennung
+- 🎤 Sprachsteuerung via Claude API
+- 📷 Objekterkennung mit YOLOv8 (in Entwicklung)
+- 🕹️ Manuelle Steuerung (WASD)
+
+## Geplant
+
+- YOLOv8 Objekterkennung integrieren
+- Echtzeit-Kamera Stream
+- Web-Interface für Fernsteuerung
+- Raspberry Pi GPIO Integration
