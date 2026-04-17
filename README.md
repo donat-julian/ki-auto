@@ -27,6 +27,18 @@ Sprachsteuerung via Claude API und automatischer Hindernissvermeidung.
 - `sprachsteuerung/` - Claude API Integration
 - `docs/` - Dokumentation
 
+## Architektur
+
+```
+[Raspberry Pi 4]          [PC / Server]
+- Motorsteuerung    <-->  - YOLOv8 Objekterkennung
+- Ultraschallsensor       - Claude API Sprachsteuerung
+- Kamera Stream           - Entscheidungslogik
+- GPIO Steuerung          - Web Interface
+        |                        |
+        └────── WLAN ────────────┘
+```
+
 ## Installation
 
 ```bash
