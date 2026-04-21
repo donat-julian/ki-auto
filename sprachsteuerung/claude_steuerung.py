@@ -17,10 +17,10 @@ class ClaudeSteuerung:
     """
     
     def __init__(self, auto=None):
-    if auto is None:
-        self.auto = Auto()
-    else:
-        self.auto = auto
+        if auto is None:
+            self.auto = Auto()
+        else:
+            self.auto = auto
     self.api_url = "https://api.anthropic.com/v1/messages"
     # API Key - später aus Umgebungsvariable laden
     self.api_key = os.environ.get("ANTHROPIC_API_KEY", "")
