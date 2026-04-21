@@ -16,22 +16,25 @@ class ClaudeSteuerung:
     Claude versteht natürliche Sprache und gibt Fahrkommandos zurück
     """
     
-    def __init__(self):
+    def __init__(self, auto=None):
+    if auto is None:
         self.auto = Auto()
-        self.api_url = "https://api.anthropic.com/v1/messages"
-        # API Key - später aus Umgebungsvariable laden
-        self.api_key = os.environ.get("ANTHROPIC_API_KEY", "")
-        
-        self.system_prompt = """Du bist die KI-Steuerung eines RC-Autos.
-        Der Benutzer gibt dir Fahrbefehle in natürlicher Sprache.
-        Du antwortest NUR mit einem JSON-Objekt in diesem Format:
-        {
-            "befehl": "vorwaerts/rueckwaerts/links/rechts/stop",
-            "geschwindigkeit": 0-100,
-            "dauer": Sekunden,
-            "begruendung": "kurze Erklärung"
-        }
-        Antworte IMMER nur mit dem JSON, nichts anderes."""
+    else:
+        self.auto = auto
+    self.api_url = "https://api.anthropic.com/v1/messages"
+    # API Key - später aus Umgebungsvariable laden
+    self.api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    
+    self.system_prompt = """Du bist die KI-Steuerung eines RC-Autos.
+    Der Benutzer gibt dir Fahrbefehle in natürlicher Sprache.
+    Du antwortest NUR mit einem JSON-Objekt in diesem Format:
+    {
+        "befehl": "vorwaerts/rueckwaerts/links/rechts/stop",
+        "geschwindigkeit": 0-100,
+        "dauer": Sekunden,
+        "begruendung": "kurze Erklärung"
+    }
+    Antworte IMMER nur mit dem JSON, nichts anderes."""
     
     def befehl_interpretieren(self, spracheingabe):
         """

@@ -51,7 +51,7 @@ def main():
     
     auto = Auto()
     sensoren = HindernisSystem()
-    claude = ClaudeSteuerung()
+    claude = ClaudeSteuerung(auto=auto)
     
     while True:
         auswahl = menue()
