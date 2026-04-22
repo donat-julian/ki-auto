@@ -24,7 +24,8 @@ class Kamera:
         if not SIMULATION:
             self.kamera = Picamera2()
             config = self.kamera.create_still_configuration(
-                main={"size": (640, 480)}
+                main={"size": (1280, 720)}
+                self.kamera.set_controls({"Rotation": 180})
             )
             self.kamera.configure(config)
             self.kamera.start()
