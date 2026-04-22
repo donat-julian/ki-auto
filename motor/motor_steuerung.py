@@ -62,8 +62,8 @@ class Auto:
         # PWM für Geschwindigkeitssteuerung
         self.pwm_links = GPIO.PWM(ENA, 1000)
         self.pwm_rechts = GPIO.PWM(ENB, 1000)
-        self.pwm_links.start(0)
-        self.pwm_rechts.start(0)
+        self.pwm_links.start(100)
+        self.pwm_rechts.start(100)
         print("✅ GPIO initialisiert")
     
     def _gpio_fahren(self, links_vor, links_rueck, rechts_vor, rechts_rueck, geschwindigkeit):
