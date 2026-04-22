@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚗 KI-Auto Steuerung</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #1a1a2e; 
+            color: white; 
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 { color: #e94560; margin-bottom: 20px; font-size: 1.5em; }
+        
+        #kamera {
+            width: 100%;
+            max-width: 640px;
+            border: 2px solid #e94560;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        #antwort {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 640px;
+            margin-bottom: 20px;
+            min-height: 50px;
+            font-size: 1.1em;
+            color: #0f3460;
+            color: #a8dadc;
+        }
+        
+        .steuerung {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            background: #e94560;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        
+        .btn:active { background: #c73652; }
+        .btn-stop { background: #333; grid-column: 2; }
+        .btn-leer { visibility: hidden; }
+        
+        #sprache-btn {
+            background: #0f3460;
+            border: 2px solid #e94560;
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 100%;
+            max-width: 640px;
+        }
+        
+        #sprache-btn.aktiv { background: #e94560; }
+    </style>
+</head>
+<body>
+    <h1>🚗 KI-Auto Steuerung</h1>
+    
+    <img id="kamera" src="/video" alt="Kamera Stream">
+    
+    <div id="antwort">🤖 Bereit für Befehle...</div>
+    
+    <div class="steuerung">
+        <div class="btn-leer"></div>
+        <button class="btn" onclick="fahren('vorwaerts')">⬆️</button>
+        <div class="btn-leer"></div>
+        <button class="btn" onclick="fahren('links')">⬅️</button>
+        <button class="btn btn-stop" onclick="fahren('stop')">⏹</button>
+        <button class="btn" onclick="fahren('rechts')">➡️</button>
+        <div class="btn-leer"></div>
+        <button class="btn" onclick="fahren('rueckwaerts')">⬇️</button>
+        <div class="btn-leer"></div>
+    </div>
+    
+    <button id="sprache-btn" onclick="sprachEingabe()">🎤 Sprechen</button>
+
+    <script>
+        function fahren(richtung) {
+            fetch('/manuell', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({richtung: richtung})
+            });
+        }
+        
+        function sprachEingabe() {
+            const btn = document.getElementById('sprache-btn');
+            const antwort = document.getElementById('antwort');
+            
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                antwort.textContent = '❌ Spracherkennung nicht unterstützt';
+                return;
+            }
+            
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'de-DE';
+            recognition.interimResults = false;
+            
+            btn.classList.add('aktiv');
+            btn.textContent = '🔴 Aufnahme...';
+            
+            recognition.onresult = function(event) {
+                const text = event.results[0][0].transcript;
+                antwort.textContent = '🎤 Du: ' + text;
+                
+                fetch('/befehl', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({text: text})
+                })
+                .then(r => r.json())
+                .then(data => {
+                    antwort.textContent = '🤖 Bruno: ' + data.antwort;
+                });
+            };
+            
+            recognition.onend = function() {
+                btn.classList.remove('aktiv');
+                btn.textContent = '🎤 Sprechen';
+            };
+            
+            recognition.start();
+        }
+    </script>
+</body>
+</html>
