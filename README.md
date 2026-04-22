@@ -60,6 +60,16 @@ python main.py
 - 📷 Objekterkennung mit YOLOv8 (in Entwicklung)
 - 🕹️ Manuelle Steuerung (WASD)
 
+## Web Interface
+
+Das Auto wird über den Handy-Browser gesteuert - keine App nötig!
+
+- 📱 Aufruf: `http://ki-auto.local:5000`
+- 📷 Live-Kamera Stream
+- 🕹️ Manuelle Steuerung (Pfeiltasten)
+- 🎤 Sprachsteuerung via Claude API
+- 🤖 KI-Antworten in Echtzeit
+
 ## Geplant
 
 - YOLOv8 Objekterkennung integrieren
@@ -71,3 +81,6 @@ python main.py
 
 ### Server-Client Kommunikation
 ![Server Client](docs/server_client_kommunikation.png)
+
+### Web Interface
+![Web Interface](docs/Web_Interface.png)
