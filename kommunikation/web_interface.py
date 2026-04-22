@@ -37,7 +37,7 @@ def kamera_stream():
                 frame_bytes = buffer.tobytes()
                 yield (b'--frame\r\n'
                        b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
-            time.sleep(0.08)  # ~30 FPS
+            time.sleep(0.01)  # ~30 FPS
         except Exception as e:
             print(f"Stream Fehler: {e}")
             time.sleep(1)
