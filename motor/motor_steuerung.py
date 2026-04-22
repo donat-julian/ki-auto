@@ -26,12 +26,12 @@ class Motor:
         self.geschwindigkeit = 0
         self.richtung = "stop"
 
-    def vorwaerts(self, geschwindigkeit=60):
+    def vorwaerts(self, geschwindigkeit=75):
         self.richtung = "vorwaerts"
         self.geschwindigkeit = geschwindigkeit
         print(f"{self.name}: Vorwärts mit {geschwindigkeit}%")
 
-    def rueckwaerts(self, geschwindigkeit=60):
+    def rueckwaerts(self, geschwindigkeit=75):
         self.richtung = "rueckwaerts"
         self.geschwindigkeit = geschwindigkeit
         print(f"{self.name}: Rückwärts mit {geschwindigkeit}%")
@@ -81,25 +81,25 @@ class Auto:
         self.pwm_links.ChangeDutyCycle(geschwindigkeit)
         self.pwm_rechts.ChangeDutyCycle(geschwindigkeit)
 
-    def vorwaerts(self, geschwindigkeit=60):
+    def vorwaerts(self, geschwindigkeit=75):
         print("\n--- Auto fährt VORWÄRTS ---")
         self.motor_links.vorwaerts(geschwindigkeit)
         self.motor_rechts.vorwaerts(geschwindigkeit)
         self._gpio_fahren(True, False, True, False, geschwindigkeit)
 
-    def rueckwaerts(self, geschwindigkeit=60):
+    def rueckwaerts(self, geschwindigkeit=75):
         print("\n--- Auto fährt RÜCKWÄRTS ---")
         self.motor_links.rueckwaerts(geschwindigkeit)
         self.motor_rechts.rueckwaerts(geschwindigkeit)
         self._gpio_fahren(False, True, False, True, geschwindigkeit)
 
-    def links(self, geschwindigkeit=60):
+    def links(self, geschwindigkeit=75):
         print("\n--- Auto fährt LINKS ---")
         self.motor_links.rueckwaerts(geschwindigkeit)
         self.motor_rechts.vorwaerts(geschwindigkeit)
         self._gpio_fahren(False, True, True, False, geschwindigkeit)
 
-    def rechts(self, geschwindigkeit=60):
+    def rechts(self, geschwindigkeit=75):
         print("\n--- Auto fährt RECHTS ---")
         self.motor_links.vorwaerts(geschwindigkeit)
         self.motor_rechts.rueckwaerts(geschwindigkeit)
