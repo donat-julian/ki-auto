@@ -31,6 +31,7 @@ def kamera_stream():
         try:
             import cv2
             frame = kamera.frame_holen()
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             if frame is not None:
                 frame = cv2.rotate(frame, cv2.ROTATE_180)
                 _, buffer = cv2.imencode('.jpg', frame)
