@@ -8,6 +8,9 @@ import sys
 import os
 import threading
 import time
+import edge_tts
+import asyncio
+import io
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from kamera.kamera import Kamera
@@ -89,6 +92,23 @@ def manuell():
         auto.stop()
     
     return jsonify({'status': 'ok'})
+
+@app.route('/sprechen', methods=['POST'])
+def sprechen():
+    """Konvertiert Text zu Sprache mit Edge TTS"""
+    daten = request.json
+    text = daten.get('text', '')
+    
+    async def generate():
+        communicate = edge_tts.Communicate(text, "de-DE-ConradNeural")
+        audio_data = io.BytesIO()
+        async for chunk in communicate.stream():
+            if chunk["type"] == "audio":
+                audio_data.write(chunk["data"])
+        return audio_data.getvalue()
+    
+    audio = asyncio.run(generate())
+    return Response(audio, mimetype='audio/mpeg')
 
 if __name__ == '__main__':
     print("🌐 Web Interface startet...")

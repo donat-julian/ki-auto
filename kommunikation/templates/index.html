@@ -141,12 +141,17 @@
             .then(r => r.json())
             .then(data => {
                 antwort.textContent = '🤖 Bruno: ' + data.antwort;
-                const speech = new SpeechSynthesisUtterance(data.antwort);
-                speech.lang = 'de-DE';
-                speech.rate = 1.1;
-                speech.pitch = 0.8;
-                window.speechSynthesis.speak(speech);
-            });
+                fetch('/sprechen', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({text: data.antwort})
+                })
+                .then(r => r.blob())
+                .then(blob => {
+                    const audio = new Audio(URL.createObjectURL(blob));
+                    audio.play();
+                });
+             });
         }
 
         document.addEventListener('keypress', function(e) {
