@@ -59,6 +59,10 @@ class Auto:
         for pin in pins:
             GPIO.setup(pin, GPIO.OUT)
         
+        # Alle Pins auf LOW setzen beim Start
+        for pin in [IN1, IN2, IN3, IN4]:
+            GPIO.output(pin, GPIO.LOW)
+
         # PWM für Geschwindigkeitssteuerung
         self.pwm_links = GPIO.PWM(ENA, 1000)
         self.pwm_rechts = GPIO.PWM(ENB, 1000)
