@@ -32,6 +32,7 @@ def kamera_stream():
             import cv2
             frame = kamera.frame_holen()
             if frame is not None:
+                frame = cv2.rotate(frame, cv2.ROTATE_180)
                 _, buffer = cv2.imencode('.jpg', frame)
                 frame_bytes = buffer.tobytes()
                 yield (b'--frame\r\n'
