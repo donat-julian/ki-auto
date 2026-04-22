@@ -35,7 +35,6 @@
             margin-bottom: 20px;
             min-height: 50px;
             font-size: 1.1em;
-            color: #0f3460;
             color: #a8dadc;
         }
         
@@ -63,19 +62,32 @@
         .btn-stop { background: #333; grid-column: 2; }
         .btn-leer { visibility: hidden; }
         
-        #sprache-btn {
-            background: #0f3460;
-            border: 2px solid #e94560;
-            padding: 15px 30px;
-            border-radius: 25px;
+        #befehl-container {
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        #befehl-input {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: #16213e;
+            color: white;
+            font-size: 1em;
+        }
+        
+        #sende-btn {
+            background: #e94560;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
             color: white;
             font-size: 1.1em;
             cursor: pointer;
-            width: 100%;
-            max-width: 640px;
         }
-        
-        #sprache-btn.aktiv { background: #e94560; }
     </style>
 </head>
 <body>
@@ -96,8 +108,11 @@
         <button class="btn" onclick="fahren('rueckwaerts')">⬇️</button>
         <div class="btn-leer"></div>
     </div>
-    
-    <button id="sprache-btn" onclick="sprachEingabe()">🎤 Sprechen</button>
+
+    <div id="befehl-container">
+        <input type="text" id="befehl-input" placeholder="Befehl an Bruno eingeben...">
+        <button id="sende-btn" onclick="sendeBefehl()">➤</button>
+    </div>
 
     <script>
         function fahren(richtung) {
@@ -108,50 +123,35 @@
             });
         }
         
-        function sprachEingabe() {
-            const btn = document.getElementById('sprache-btn');
+        function sendeBefehl() {
+            const input = document.getElementById('befehl-input');
             const antwort = document.getElementById('antwort');
+            const text = input.value.trim();
             
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                antwort.textContent = '❌ Spracherkennung nicht unterstützt';
-                return;
-            }
+            if (!text) return;
             
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'de-DE';
-            recognition.interimResults = false;
+            antwort.textContent = '🎤 Du: ' + text;
+            input.value = '';
             
-            btn.classList.add('aktiv');
-            btn.textContent = '🔴 Aufnahme...';
-            
-            recognition.onresult = function(event) {
-                const text = event.results[0][0].transcript;
-                antwort.textContent = '🎤 Du: ' + text;
-                
-                fetch('/befehl', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({text: text})
-                })
-                .then(r => r.json())
-                .then(data => {
-                     antwort.textContent = '🤖 Bruno: ' + data.antwort;
-                    // Bruno spricht!
-                    const speech = new SpeechSynthesisUtterance(data.antwort);
-                    speech.lang = 'de-DE';
-                    speech.rate = 1.1;
-                    speech.pitch = 0.8;
-                    window.speechSynthesis.speak(speech);
-                });
-            };
-            
-            recognition.onend = function() {
-                btn.classList.remove('aktiv');
-                btn.textContent = '🎤 Sprechen';
-            };
-            
-            recognition.start();
+            fetch('/befehl', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({text: text})
+            })
+            .then(r => r.json())
+            .then(data => {
+                antwort.textContent = '🤖 Bruno: ' + data.antwort;
+                const speech = new SpeechSynthesisUtterance(data.antwort);
+                speech.lang = 'de-DE';
+                speech.rate = 1.1;
+                speech.pitch = 0.8;
+                window.speechSynthesis.speak(speech);
+            });
         }
+
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendeBefehl();
+        });
     </script>
 </body>
 </html>
