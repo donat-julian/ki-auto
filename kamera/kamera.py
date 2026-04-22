@@ -25,12 +25,12 @@ class Kamera:
             self.kamera = Picamera2()
             config = self.kamera.create_still_configuration(
                 main={"size": (1280, 720)}
-                self.kamera.set_controls({"Rotation": 180})
             )
             self.kamera.configure(config)
+            self.kamera.set_controls({"Rotation": 180})
             self.kamera.start()
             time.sleep(1)  # Kamera aufwärmen
-            print("✅ Kamera initialisiert (640x480)")
+            print("✅ Kamera initialisiert (1280x720)")
         else:
             print("✅ Kamera simuliert")
     
