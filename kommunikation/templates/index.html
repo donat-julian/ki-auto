@@ -135,7 +135,13 @@
                 })
                 .then(r => r.json())
                 .then(data => {
-                    antwort.textContent = '🤖 Bruno: ' + data.antwort;
+                     antwort.textContent = '🤖 Bruno: ' + data.antwort;
+                    // Bruno spricht!
+                    const speech = new SpeechSynthesisUtterance(data.antwort);
+                    speech.lang = 'de-DE';
+                    speech.rate = 1.1;
+                    speech.pitch = 0.8;
+                    window.speechSynthesis.speak(speech);
                 });
             };
             
